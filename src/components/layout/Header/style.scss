@@ -1,0 +1,97 @@
+@import '~style_helpers';
+
+.header {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: $header-height-small;
+	padding: 0;
+	background: $main-color;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	z-index: 50;
+	transition: height $transition-time;
+
+	@media (min-width: $mq-large)
+	{
+		height: $header-height;
+	}
+
+	.title {
+		height: 100%;
+		display: inline-block;
+
+		h1 {
+			display: block;
+			margin: 0;
+			padding: 0 15px;
+			font-size: 24px;
+			line-height: $header-height-small;
+			font-weight: 400;
+			color: $main-title-color;
+			transition: line-height $transition-time, margin $transition-time, padding $transition-time;
+
+			@media (min-width: $mq-medium)
+			{
+				width: $sidebar-width;
+				margin: 0 40.688px;
+				padding: 0;
+			}
+
+	    	@media (min-width: $mq-large)
+			{
+				top: $header-height;
+				line-height: $header-height;
+			}
+		}
+	}
+
+	.currentPageTitle {
+		position: absolute;
+		top: 0;
+		width: 100%;
+
+		@media (min-width: $mq-medium)
+		{
+			margin: 0 0 0 15px;
+		}
+
+		@media (min-width: $mq-large)
+		{
+			line-height: $header-height;
+		}
+
+		h1 {
+			position: relative;
+			margin: 0;
+			text-align: center;
+			transition: margin $transition-time;
+
+			@media (min-width: $mq-medium)
+			{
+				margin: -$header-height 0 0 0;
+			}
+		}
+	}
+
+	.menu {
+		$spacing: 10px;
+		z-index: 100;
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: $header-height-small - 2*$spacing;
+		width: $header-height-small * 175 / 135 - 2*$spacing;
+		margin: $spacing $spacing/2;
+		float: right;
+		display: inline-block;
+		background: url("/assets/icons/menu.svg") no-repeat;
+		background-size: ($header-height-small  * 175 / 135 - 2*$spacing) ($header-height-small - 2*$spacing);
+		transition: margin-right $transition-time;
+
+		@media (min-width: $mq-medium)
+		{
+			margin: $spacing -35px 0 0;
+		}
+	}
+}

@@ -1,12 +1,14 @@
+@import '~style_helpers';
+
 html, body {
 	height: 100%;
 	width: 100%;
 	padding: 0;
 	margin: 0;
-	background: #FAFAFA;
+	background: $background-color;
 	font-family: 'Helvetica Neue', arial, sans-serif;
 	font-weight: 400;
-	color: #444;
+	color: $text-color;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -17,4 +19,28 @@ html, body {
 
 #app {
 	height: 100%;
+}
+
+#wrapper {
+	padding: $header-height-small 0 0 0;
+	transition: padding $transition-time;
+
+    > div > h1 {
+    	margin: 15px 0 15px 0;
+    	color: $light-gray;
+    }
+	
+	@media (min-width: $mq-medium)
+	{
+    	padding: $header-height-small 0 0 $sidebar-width;
+
+	    > div > h1 {
+	    	margin: 15px 0 15px 0;
+	    }
+    }
+
+	@media (min-width: $mq-large)
+	{
+		padding: $header-height 0 0 $sidebar-width;
+	}
 }

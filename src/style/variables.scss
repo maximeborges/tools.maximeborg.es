@@ -1,0 +1,33 @@
+$red: #F00;
+$blue: #00F;
+$white: #FFF;
+$gray: #999;
+$black: #000;
+$light-gray: #dadada;
+
+$text-color: $light-gray;
+$main-title-color: $light-gray;
+$title-color: $text-color;
+$sidebar-text-color: $light-gray;
+
+$main-color: #333745;
+$background-color: darken($main-color, 10%);
+
+$header-height: 56px;
+$header-height-small: 40px;
+
+$sidebar-width: 150px;
+
+
+// Media queries breakpoints
+// $mq-small: 30em; // 480px
+// $mq-medium: 40.0625em; // 641px
+// $mq-large: 60.0625em; // 961px
+// $mq-xlarge: 80.0625em; // 1281px
+
+$mq-small: 480px;
+$mq-medium: 641px;
+$mq-large: 961px;
+$mq-xlarge: 1281px;
+
+$transition-time: .5s;

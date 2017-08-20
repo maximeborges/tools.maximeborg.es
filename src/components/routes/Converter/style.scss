@@ -1,0 +1,64 @@
+@import '~style_helpers';
+
+.converter {
+	padding: 20px;
+	min-height: 100%;
+	width: 100%;
+
+    .grid {
+        display: grid;
+        grid-gap: 15px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        color: #1d1d1d;
+
+        @media (min-width: $mq-small)
+        {
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+        }
+
+        @media (min-width: $mq-medium)
+        {
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+        }
+
+        .container {
+            padding: 15px 20px;
+
+            &#text {
+                background: #f3c968;
+            }
+            &#hex {
+                background: #da5871;
+            }
+            &#bin {
+                background: #755579;
+            }
+            &#base64 {
+                background: #1098c7;
+            }
+            &#dec {
+                background: #15bc91;
+            }
+
+            h2 {
+                margin: 0 0 10px 0;
+                padding: 0;
+            }
+
+            textarea {
+                width: 100%;
+                min-height: 150px;
+                resize: vertical;
+                background: rgba(255,255,255,0.8);
+                border: none;
+                transition: min-height $transition-time;
+
+                @media (min-width: $mq-xlarge)
+                {
+                    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+                    min-height: 200px;
+                }
+            }
+        }
+    }
+}

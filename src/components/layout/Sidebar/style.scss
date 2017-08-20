@@ -1,0 +1,62 @@
+@import '~style_helpers';
+
+.sidebar {
+	position: fixed;
+	left: 0;
+	top: $header-height-small;
+	width: 0px;
+	height: 0px;
+	padding: 0;
+	background: $main-color;
+	z-index: 40;
+	overflow-x: hidden;
+	transition: top $transition-time, width $transition-time, height $transition-time $transition-time, display $transition-time;
+
+	&.open {
+		width: 100%;
+		height: 168px; // Beurk hardcoded
+		transition: top $transition-time, width $transition-time, height $transition-time, display $transition-time;
+		overflow-y: hidden;
+	}
+
+	@media (min-width: $mq-medium)
+	{
+		height: 100% !important;
+		width: $sidebar-width;
+		transition: top $transition-time, width $transition-time, display $transition-time;
+		&.open {
+			width: $sidebar-width;
+		}
+	}
+
+	@media (min-width: $mq-large)
+	{
+		top: $header-height;
+	}
+
+	nav {
+        width: 100%;
+		font-size: 100%;
+
+		a {
+			display: inline-block;
+			height: 56px;
+            width: 100%;
+			line-height: 56px;
+			padding: 0 15px;
+			text-align: center;
+			background: rgba(255,255,255,0);
+			text-decoration: none;
+            color: $light-gray;
+			will-change: background-color;
+
+			&:hover, &:active {
+				background: rgba(255,255,255,0.07);
+			}
+
+			&.active {
+				background: rgba(255,255,255,0.15);
+			}
+		}
+	}
+}
