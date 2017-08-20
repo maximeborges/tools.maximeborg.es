@@ -34,6 +34,78 @@ yarn build
 
 > You're done! Now serve the `build` folder from wherever you want!
 
+## Make it your own
+
+**1. Edit src/manifest.json: (default)**
+
+```json
+{
+  "name": "Tools @ maximeborg.es",
+  "short_name": "Tools",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff",
+  "theme_color": "#333745",
+  "icons": [{
+    "src": "/assets/icons/android-chrome-192x192.png",
+    "type": "image/png",
+    "sizes": "192x192"
+  },
+  {
+    "src": "/assets/icons/android-chrome-512x512.png",
+    "type": "image/png",
+    "sizes": "512x512"
+  }]
+}
+
+```
+
+**2. Do whatever the fuck you want:**
+
+```
+src
+├── assets
+│   ├── favicon.ico
+│   └── icons
+│       ├── android-chrome-192x192.png
+│       ├── android-chrome-512x512.png
+│       ├── apple-touch-icon.png
+│       ├── favicon-16x16.png
+│       ├── favicon-32x32.png
+│       ├── menu.svg
+│       └── mstile-150x150.png
+├── components
+│   ├── app.js
+│   ├── layout
+│   │   ├── Header
+│   │   │   ├── index.js
+│   │   │   └── style.scss
+│   │   └── Sidebar
+│   │       ├── index.js
+│   │       └── style.scss
+│   └── routes
+│       ├── Converter
+│       │   ├── index.js
+│       │   └── style.scss
+│       ├── Crypto
+│       │   ├── index.js
+│       │   └── style.scss
+│       ├── Error
+│       │   ├── index.js
+│       │   └── style.scss
+│       └── Home
+│           ├── index.js
+│           └── style.scss
+├── index.js
+├── manifest.json
+└── style
+    ├── helpers.scss
+    ├── index.scss
+    ├── mixins.scss
+    └── variables.scss
+```
+
 
 ## Serving
 
