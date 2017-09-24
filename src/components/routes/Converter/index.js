@@ -16,6 +16,7 @@ export default class Converter extends Component {
         this.handleInputHex = this.handleInputHex.bind(this);
         this.handleInputBin = this.handleInputBin.bind(this);
         this.handleInputBase64 = this.handleInputBase64.bind(this);
+        this.handleInputDec = this.handleInputDec.bind(this);
 
         this.pad = (n, width) => {
             n = n + '';
@@ -35,7 +36,7 @@ export default class Converter extends Component {
 
     handleInputText(event) {
         let val = event.target.value;
-        if(val == '') return this.clear;
+        if(val == '') return this.clear();
 
         let encoder = new TextEncoder('utf8');
         let utf8 = encoder.encode(val);
@@ -45,7 +46,7 @@ export default class Converter extends Component {
             textValue: val,
             base64Value: btoa(String.fromCharCode.apply(null, utf8)),
             decValue: utf8.reduce((prevVal, elem, index, array) => {
-                return prevVal + elem.toString(10) + (index == array.length - 1?'':' ');
+                return prevVal + this.pad(elem.toString(10), 3) + (index == array.length - 1?'':' ');
             }, ""),
             hexValue: utf8.reduce((prevVal, elem, index, array) => {
                 return prevVal + this.pad(elem.toString(16), 2) + (index == array.length - 1?'':' ');
@@ -61,9 +62,9 @@ export default class Converter extends Component {
 
         // Check if there is a valid input
         // TODO: add error if invalid
-        if(val.search(/^([0-9A-Fa-f]{2} ?)+$/) == 0) {
+        if(val.search(/^(\s+)?([0-9A-Fa-f]{2}(\s+)?)+$/) == 0) {
             // Get each hex pair
-            let splittedVal = val.match(/[0-9A-Fa-f]{2} ?/g);
+            let splittedVal = val.match(/(\s+)?[0-9A-Fa-f]{2}(\s+)?/g);
             let decArr = [];
             for(let hex of splittedVal) {
                 decArr.push(parseInt(hex, 16));
@@ -76,7 +77,7 @@ export default class Converter extends Component {
                 hexValue: val,
                 textValue: text,
                 decValue: decArr.reduce((prevVal, elem, index, array) => {
-                    return prevVal + elem.toString(10) + (index == array.length - 1?'':' ');
+                    return prevVal + this.pad(elem.toString(10), 3) + (index == array.length - 1?'':' ');
                 }, ""),
                 binValue: decArr.reduce((prevVal, elem, index, array) => {
                     return prevVal + this.pad(elem.toString(2), 8) + (index == array.length - 1?'':' ');
@@ -91,9 +92,9 @@ export default class Converter extends Component {
 
         // Check if there is a valid input
         // TODO: add error if invalid
-        if(val.search(/^([01]{8} ?)+$/) == 0) {
+        if(val.search(/^(\s+)?([01]{8}(\s+)?)+$/) == 0) {
             // Get each hex pair
-            let splittedVal = val.match(/[01]{8} ?/g);
+            let splittedVal = val.match(/(\s+)?[01]{8}(\s+)?/g);
             let decArr = [];
             for(let bin of splittedVal) {
                 decArr.push(parseInt(bin, 2));
@@ -102,15 +103,13 @@ export default class Converter extends Component {
             let decoder = new TextDecoder('utf8');
             let text = decoder.decode(new Uint8Array(decArr));
 
-            console.log(decArr)
-
             this.setState({
                 hexValue: decArr.reduce((prevVal, elem, index, array) => {
                     return prevVal + this.pad(elem.toString(16).toUpperCase(), 2) + (index == array.length - 1?'':' ');
                 }, ""),
                 textValue: text,
                 decValue: decArr.reduce((prevVal, elem, index, array) => {
-                    return prevVal + elem.toString(10) + (index == array.length - 1?'':' ');
+                    return prevVal + this.pad(elem.toString(10), 3) + (index == array.length - 1?'':' ');
                 }, ""),
                 binValue: val,
                 base64Value: btoa(String.fromCharCode.apply(null, decArr)),
@@ -118,10 +117,64 @@ export default class Converter extends Component {
         }
     }
     handleInputBase64(event) {
-        console.log(event);
+        let val = event.target.value;
+        if(val == '') return this.clear();
+
+        // Ugly
+        let b64DecodeUnicode = (str) => {
+            return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+        }
+
+        let decoded = b64DecodeUnicode(val);
+
+        let encoder = new TextEncoder('utf8');
+        let utf8 = encoder.encode(decoded);
+
+        this.setState({
+            textValue: decoded,
+            base64Value: val,
+            decValue: utf8.reduce((prevVal, elem, index, array) => {
+                return prevVal + this.pad(elem.toString(10), 3) + (index == array.length - 1?'':' ');
+            }, ""),
+            hexValue: utf8.reduce((prevVal, elem, index, array) => {
+                return prevVal + this.pad(elem.toString(16), 2) + (index == array.length - 1?'':' ');
+            }, ""),
+            binValue: utf8.reduce((prevVal, elem, index, array) => {
+                return prevVal + this.pad(elem.toString(2), 8) + (index == array.length - 1?'':' ');
+            }, ""),
+        });
     }
     handleInputDec(event) {
-        console.log(event);
+        let val = event.target.value;
+        if(val == '') return this.clear();
+
+        // Check if there is a valid input
+        // TODO: add error if invalid
+        if(val.search(/^(\s+)?([0-9]{3}(\s+)?)+$/) == 0) {
+            // Get each hex pair
+            let splittedVal = val.match(/(\s+)?[0-9]{3}(\s+)?/g);
+            let decArr = [];
+            for(let dec of splittedVal) {
+                decArr.push(parseInt(dec));
+            }
+
+            let decoder = new TextDecoder('utf8');
+            let text = decoder.decode(new Uint8Array(decArr));
+
+            this.setState({
+                decValue: val,
+                textValue: text,
+                hexValue: decArr.reduce((prevVal, elem, index, array) => {
+                    return prevVal + this.pad(elem.toString(16), 2) + (index == array.length - 1?'':' ');
+                }, ""),
+                binValue: decArr.reduce((prevVal, elem, index, array) => {
+                    return prevVal + this.pad(elem.toString(2), 8) + (index == array.length - 1?'':' ');
+                }, ""),
+                base64Value: btoa(String.fromCharCode.apply(null, decArr)),
+            });
+        }
     }
 
 	render() {
