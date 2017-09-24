@@ -106,6 +106,14 @@ src
     └── variables.scss
 ```
 
+## Deploy
+
+After building the app, you can use the `deploy.sh` script to deploy the `build/` directory directly to your server using `rsync`. The format is `./deploy.sh <dry-run|live> <username@server> <port> <dist_path>`.
+
+Example:
+```
+./deploy.sh live myuser@tools.maximeborg.es 22 /var/www/tools.maximeborg.es
+```
 
 ## Serving
 
@@ -115,7 +123,7 @@ Since this application use `preact-router`, you can access any page with a simpl
 tools.maximeborg.es {
     header / server "AN AMAZING UNICORN"
     tls contact@maximeborg.es
-    root /var/www/tools.maximeborg.es/build
+    root /var/www/tools.maximeborg.es
     gzip
     rewrite / {
         to {path} /
