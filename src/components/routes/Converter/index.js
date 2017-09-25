@@ -1,6 +1,17 @@
 import { h, Component } from 'preact';
 import s from './style.scss';
 
+if (typeof TextEncoder === "undefined" && typeof window !== "undefined") {  
+    var polyfill1 = document.createElement("script");
+    polyfill1.src = "./assets/libs/encoding-indexes.js";
+    polyfill1.async = false;
+    var polyfill2 = document.createElement("script");
+    polyfill2.src = "./assets/libs/encoding.js";
+    polyfill2.async = false;
+    document.head.appendChild(polyfill1);
+    document.head.appendChild(polyfill2);
+}
+
 export default class Converter extends Component {
     constructor(props) {
         super(props);
