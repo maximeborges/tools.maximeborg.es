@@ -1,6 +1,6 @@
 # [WIP] [tools.maximeborg.es](https://tools.maximeborg.es)
 
-HELLO FIP
+test
 
 > :rocket: Based on [preact-cli](https://github.com/developit/preact-cli). Ready to deploy using [Webpack] and [Preact]
 >
