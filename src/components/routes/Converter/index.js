@@ -41,6 +41,12 @@ export default class Converter extends Component {
                 decValue: '',
                 binValue: '',
                 base64Value: '',
+
+                hexError: '',
+                textError: '',
+                decError: '',
+                binError: '',
+                base64Error: s.error,
             });
         }
     }
@@ -138,24 +144,31 @@ export default class Converter extends Component {
             }).join(''));
         }
 
-        let decoded = b64DecodeUnicode(val);
+        let decoded;
+        try {
+            decoded = b64DecodeUnicode(val);    
+            if(this.base64Error != '') {
+                this.setState({base64Error: ''});
+            }
+            let encoder = new TextEncoder('utf8');
+            let utf8 = encoder.encode(decoded);
 
-        let encoder = new TextEncoder('utf8');
-        let utf8 = encoder.encode(decoded);
-
-        this.setState({
-            textValue: decoded,
-            base64Value: val,
-            decValue: utf8.reduce((prevVal, elem, index, array) => {
-                return prevVal + this.pad(elem.toString(10), 3) + (index == array.length - 1?'':' ');
-            }, ""),
-            hexValue: utf8.reduce((prevVal, elem, index, array) => {
-                return prevVal + this.pad(elem.toString(16), 2) + (index == array.length - 1?'':' ');
-            }, ""),
-            binValue: utf8.reduce((prevVal, elem, index, array) => {
-                return prevVal + this.pad(elem.toString(2), 8) + (index == array.length - 1?'':' ');
-            }, ""),
-        });
+            this.setState({
+                textValue: decoded,
+                base64Value: val,
+                decValue: utf8.reduce((prevVal, elem, index, array) => {
+                    return prevVal + this.pad(elem.toString(10), 3) + (index == array.length - 1?'':' ');
+                }, ""),
+                hexValue: utf8.reduce((prevVal, elem, index, array) => {
+                    return prevVal + this.pad(elem.toString(16), 2) + (index == array.length - 1?'':' ');
+                }, ""),
+                binValue: utf8.reduce((prevVal, elem, index, array) => {
+                    return prevVal + this.pad(elem.toString(2), 8) + (index == array.length - 1?'':' ');
+                }, ""),
+            });
+        } catch(e) {
+            this.setState({base64Error: s.error, base64Value: val});
+        }
     }
     handleInputDec(event) {
         let val = event.target.value;
@@ -189,28 +202,35 @@ export default class Converter extends Component {
     }
 
 	render() {
+        var classes = {
+            bgColor: (this.props.bgColor ? 'bgColor-' + this.props.bgColor : ''),
+        };
+        var classnames = cx(style, [
+            'this',
+            classes.bgColor,
+        ]);
 		return (
 			<div class={s.converter}>
                 <div class={s.grid}>
                     <div class={s.container} id={s.text}>
                         <h2>Text (UTF-8)</h2>
-                        <textarea onInput={this.handleInputText} value={this.state.textValue}></textarea>
+                        <textarea class={this.textError} onInput={this.handleInputText} value={this.state.textValue}></textarea>
                     </div>
                     <div class={s.container} id={s.hex}>
                         <h2>Hexadecimal</h2>
-                        <textarea onInput={this.handleInputHex} value={this.state.hexValue}></textarea>
+                        <textarea class={this.hexError} onInput={this.handleInputHex} value={this.state.hexValue}></textarea>
                     </div>
                     <div class={s.container} id={s.bin}>
                         <h2>Binary</h2>
-                        <textarea onInput={this.handleInputBin} value={this.state.binValue}></textarea>
+                        <textarea class={this.binError} onInput={this.handleInputBin} value={this.state.binValue}></textarea>
                     </div>
                     <div class={s.container} id={s.base64}>
                         <h2>Base64</h2>
-                        <textarea onInput={this.handleInputBase64} value={this.state.base64Value}></textarea>
+                        <textarea class={this.base64Error} onInput={this.handleInputBase64} value={this.state.base64Value}></textarea>
                     </div>
                     <div class={s.container} id={s.dec}>
                         <h2>Decimal</h2>
-                        <textarea onInput={this.handleInputDec} value={this.state.decValue}></textarea>
+                        <textarea class={this.decError} onInput={this.handleInputDec} value={this.state.decValue}></textarea>
                     </div>
                 </div>
 			</div>

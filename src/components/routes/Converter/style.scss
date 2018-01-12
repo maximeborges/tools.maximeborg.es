@@ -56,6 +56,10 @@
                 border: none;
                 transition: min-height $transition-time;
 
+                &.error {
+                    border: 1px solid red;
+                }
+
                 @media (min-width: $mq-xlarge)
                 {
                     grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
