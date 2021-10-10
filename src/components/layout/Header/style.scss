@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '~style_helpers';
 
 .header {
@@ -82,12 +84,12 @@
 		top: 0;
 		right: 0;
 		height: $header-height-small - 2*$spacing;
-		width: $header-height-small * 175 / 135 - 2*$spacing;
-		margin: $spacing $spacing/2;
+		width: math.div($header-height-small * 175, 135) - 2*$spacing;
+		margin: $spacing $spacing*0.5;
 		float: right;
 		display: inline-block;
 		background: url("/assets/icons/menu.svg") no-repeat;
-		background-size: ($header-height-small  * 175 / 135 - 2*$spacing) ($header-height-small - 2*$spacing);
+		background-size: (math.div($header-height-small  * 175, 135) - 2*$spacing) ($header-height-small - 2*$spacing);
 		transition: margin-right $transition-time;
 
 		@media (min-width: $mq-medium)
