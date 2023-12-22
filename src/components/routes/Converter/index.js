@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import s from './style.scss';
+import s from './style.module.scss';
 
 if (typeof TextEncoder === "undefined" && typeof window !== "undefined") {  
     var polyfill1 = document.createElement("script");

@@ -27,11 +27,11 @@ export default class Sidebar extends Component {
 
 	render() {
 		return (
-			<aside class={style.sidebar} >
+			<aside class="sidebar" >
 				<nav>
-					<Link activeClassName={style.active} href="/">Home</Link>
-                    <Link activeClassName={style.active} href="/converter">Converter</Link>
-					<Link activeClassName={style.active} href="/crypto">Crypto</Link>
+					<Link activeClassName="active" href="/">Home</Link>
+                    <Link activeClassName="active" href="/converter">Converter</Link>
+					<Link activeClassName="active" href="/crypto">Crypto</Link>
 				</nav>
 			</aside>
 		);

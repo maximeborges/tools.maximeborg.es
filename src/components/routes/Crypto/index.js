@@ -5,7 +5,7 @@ import style from './style.scss';
 export default class Crypto extends Component {
 	render() {
 		return (
-			<div class={style.aes}>
+			<div class="aes">
 			</div>
 		);
 	}

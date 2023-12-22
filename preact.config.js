@@ -1,14 +1,18 @@
-import path from 'path';
-
 /**
- * Function that mutates original webpack config.
- * Supports asynchronous changes when promise is returned.
+ * Function that mutates the original webpack config.
+ * Supports asynchronous changes when a promise is returned (or it's an async function).
+ * You can find more info here: https://github.com/preactjs/preact-cli#webpack
  *
- * @param {object} config - original webpack config.
- * @param {object} env - options passed to CLI.
- * @param {WebpackConfigHelpers} helpers - object with useful helpers when working with config.
- **/
-export default function (config, env, helpers) {
-	config.resolve.alias["style_helpers"] = path.resolve(__dirname, "src/style/helpers.scss");
-	return config;
-}
+ * @param {import('preact-cli').Config} config - original webpack config
+ * @param {import('preact-cli').Env} env - current environment and options pass to the CLI
+ * @param {import('preact-cli').Helpers} helpers - object with useful helpers for working with the webpack config
+ */
+export default (config, env, helpers) => {
+	/** you can change the config here **/
+	let sass = helpers.getLoadersByName(config, 'sass-loader')[0];
+	sass.loader.options.sourceMap = true;
+	
+	config.resolve.alias= {
+		'style_helpers': path.resolve(__dirname, "src/style/helpers.scss") 	
+	}
+};

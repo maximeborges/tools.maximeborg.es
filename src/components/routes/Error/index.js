@@ -30,7 +30,7 @@ export default class Error extends Component {
 	// Note: `code` comes from the URL, courtesy of our router
 	render({ code }, { time, count }) {
 		return (
-			<div class={style.profile}>
+			<div class="profile">
 				<h1>Error code: {code}</h1>
 				<div>The page you requested disapeared in the limbo of the web.</div>
                 <div>Or maybe I'm just really stupid or something.</div>
