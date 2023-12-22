@@ -1,0 +1,15 @@
+image: node:21-alpine
+
+pages:
+  script:
+    - npm install
+    - npm run build
+
+  artifacts:
+    paths:
+      # Path of our artifacts
+      - build
+
+  # This config will only publish changes that are pushed on the main branch
+  only:
+    - main
